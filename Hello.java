@@ -101,15 +101,6 @@ public void actionPerformed(java.awt.event.ActionEvent e) {
 	}
 	catch(SQLException ex)
 	{
-		//Logger.getLogger(Hello.class.getName(), null).log(Level.SEVERE,null,ex);
-		
-		
-		
-	}
-	
-
-	
+		//Logger.getLogger(Hello.class.getName(), null).log(Level.SEVERE,null,ex); }
+    } 
 } 
-
-
- } 
