@@ -27,7 +27,7 @@ public Sign(){
 	    
 	    l2=new JLabel("Password");  
 	    l2.setBounds(50,125, 100,30); 
-	    
+	     
 	    t2=new JPasswordField();  
 	    t2.setBounds(50,150, 200,30);
 	    
