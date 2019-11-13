@@ -1,13 +1,9 @@
-import javax.swing.*;  
-import java.awt.event.ActionEvent;
+import javax.swing.*;
 import java.awt.event.ActionListener;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.logging.Logger;
 import java.sql.*;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
+
+
+
 class Sign implements ActionListener
 {  
 	JTextField t1; 
@@ -16,9 +12,11 @@ class Sign implements ActionListener
 public static void main(String args[])  
     {
 		new Sign();
+		
     }
-	Sign(){
-	    JFrame f= new JFrame("User Registration"); 
+
+public Sign(){
+	    JFrame f= new JFrame("User Sign in"); 
 	    
 	    
 	    l1=new JLabel("Username");  
@@ -44,54 +42,43 @@ public static void main(String args[])
 	    f.setLayout(null);  
 	    f.setVisible(true);  
     }  
-private void b_LOGINActionPerformed(java.awt.event.ActionEvent evt)
-{
-	PreparedStatement ps;
-	ResultSet rs;
-	String uname=t1.getText();
-	String pass=String.copyValueOf(t2.getPassword());
-	String query="SELECT*FROM 'the_app_users'WHERE'u_uname'=?AND'u_pass'=?"; 
-	try {
-	ps=MyConnection.getConnection().prepareStatement(query);
-	ps.setString(1, uname);
-	ps.setString(2, pass);
-	rs=ps.executeQuery();
-	if(rs.next())
-	{
-		HOME_JFrame mf=new HOME_JFrame();
-		mf.setVisible(true);
-		mf.pack();
-		mf.setLocationRelativeTo(null);
-		mf.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		mf.l1.setText("Welcome<"+uname+">");
-		this.dispose();
+	public void actionPerformed(java.awt.event.ActionEvent e)
+	{	
+		PreparedStatement ps;
+		ResultSet rs;
+		String UserId=t1.getText();  
+		String Pass=String.valueOf(t2.getPassword());
+		
+		
+		String query="SELECT * FROM registeredusers WHERE UserId=? and Pass=? ";
+		System.out.println(UserId + Pass);
+		try {
+			ps	= DBConnect.getConnection().prepareStatement(query);
+			ps.setString(1, UserId);
+			ps.setString(2, Pass);
+			rs = ps.executeQuery();
+		
+		
+	
+		
+			if(rs.next())
+			{
+					
+				JOptionPane.showMessageDialog(null, "Success !!");
+				new Option();
+				
+				
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Wrong Credentials !!");
+			}
+			
+		}catch(SQLException ex) {
+			
+			//Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE,null,ex);
+		}
 	}
-	else
-	{
-		JOptionPane.showMessageDialog(null, "NO");
-	}
-	}catch(SQLException ex) {
-		Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE,null,ex);
-	}
-}
-public boolean checkUsername(String username)
-{
-	PreparedStatement ps;
-	ResultSet rs;
-	boolean checkUser=false;
-	String query="SELECT*FROM 'the_app_users'WHERE'u_uname'=? "; 
-	try {
-	ps=MyConnection.getConnection().prepareStatement(query);
-	ps.setString(1, username);
-	rs=ps.executeQuery();
-	if(rs.next())
-	{
-		checkUser=true;
-	}
-	}
-	catch(SQLException ex) {
-		Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE,null,ex);
-	}
-	return checkUser;
-}
- } 
+
+
+} 
