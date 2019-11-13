@@ -7,9 +7,9 @@ import java.sql.*;
 public class Option
 {    
 JFrame f;    
+String point[]={"BPHC","Secunderabad Railway Station","Thumkunta","Airport","Parade Ground"}; 
 Option(){    
-    f=new JFrame("ComboBox Example");    
-    String point[]={"BPHC","Secunderabad Railway Station","Thumkunta","Airport","Parade Ground"};        
+    f=new JFrame("ComboBox Example");           
     JLabel l1,l2;
     l1=new JLabel("From : ");
     l1.setBounds(50,25,250,20); 
@@ -50,16 +50,61 @@ public void findDriver(int a) {
 		ResultSet result1=statement1.executeQuery();
 		ResultSet result2=statement2.executeQuery();
 		ArrayList<String> array1=new ArrayList<String>();
-		ArrayList<int> array2=new ArrayList<Int>();
+		int array[]=new int[5];
 		JTextField t1;
+		JLabel l1;
 		int i=0;
 		while(result1.next()) {
 			array1.add(result1.getString("Name"));
-			array2.add(result2.getInt("Rating"));
+			array[i]=result2.getInt("Rating");
+			i++;
 		}
-		String s=sort(array1);
+		/*
+		 *    t1=new JTextField(" ");  
+	    t1.setBounds(50,50, 200,30); 
+	    
+	     l2=new JLabel("User Id");  
+	    l2.setBounds(50,100, 100,30);
+		 */
+		if(i==0)
+		{
+			DriverNotAvailable(a)
+			System.out.println("Driver is not available");
+			l1=new JLabel("Driver is not available");
+			l1.setBounds(50,100,250,20);
+		}
+		else {
+		int s=sort(array,i);
+		l1=new JLabel("Driver is"+array1.get(s));
+		l1.setBounds(50,100,250,20);
+		}
+		}
+		catch(Exception e)
+		{
+		System.out.println(e);
+		}
 }
-	
+public void DriverNotAvailable(int a){
+	try {
+	Connection con=getConnection();
+	String s=point[a-1];
+	PreparedStatement statement3=con.prepareStatement("SELECT 's' FROM destination WHERE Location=a");
+	}
+	catch(Exception e)
+	{
+		System.out.println(e);
+	}
+}
+public int sort(int array[],int n)
+{
+	int max=array[0];
+	for(int i=0;i<n;i++)
+	{
+		if(array[i]>array[max])
+			max=i;
+	}
+	return max;
+}
 public static Connection getConnection() throws Exception{
 	  try{
 	   String driver = "com.mysql.jdbc.Driver";
