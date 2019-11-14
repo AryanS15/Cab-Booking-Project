@@ -66,6 +66,8 @@ public class Wallet  {
 		 try{
 			 s1=t1.getText(); 
 		 a=Float.parseFloat(s1);
+		 if(a<=0)
+		 {JOptionPane.showMessageDialog(null, "Please enter the correct amount");return;}
 		l2.setText("Wallet balance : "+ (w+a));
 		t1.setText("");
 		wallet=w+a;
