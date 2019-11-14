@@ -39,16 +39,27 @@ public Sign(){
 	    b.setBounds(50,200,95,30);
 	    b.addActionListener(this);
 	    
+	    JLabel l10=new JLabel("New User ?");
+	    l10.setBounds(275,325,120,30);
 	    
+	    JButton b10=new JButton("Register");  
+	    b10.setBounds(405,325,95,30);
+	    b10.addActionListener(new ActionListener() {
+	    	
+			public void actionPerformed(ActionEvent ae) {
+				
+				new Hello();
+			}
+			});
 	    
 	    
 	    
 	    
 	   	    
 	    
-	    f.add(l1); f.add(l2);
+	    f.add(l1); f.add(l2);f.add(l10);
 	    f.add(t1); f.add(t2); 
-	    f.add(b);
+	    f.add(b);f.add(b10);
 	    f.setSize(700,700);  
 	    f.setLayout(null);  
 	    f.setVisible(true);  
@@ -110,7 +121,7 @@ public Sign(){
 				else
 				{
 				
-					new Option();
+					new Option(wallet);
 				
 				}
 				
