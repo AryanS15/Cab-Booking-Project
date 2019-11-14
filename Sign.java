@@ -1,14 +1,18 @@
 import javax.swing.*;
+
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 
 
 
-class Sign implements ActionListener
-{  
-	JTextField t1; 
+public class Sign implements ActionListener
+{ 
+	public int wallet;
+	 JFrame f;
+	JTextField t1,t3; 
     JPasswordField t2;
-    JLabel l1,l2;  
+    JLabel l1,l2,l3,l4;  
 public static void main(String args[])  
     {
 		new Sign();
@@ -16,7 +20,7 @@ public static void main(String args[])
     }
 
 public Sign(){
-	    JFrame f= new JFrame("User Sign in"); 
+	    f= new JFrame("User Sign in"); 
 	    
 	    
 	    l1=new JLabel("Username");  
@@ -27,21 +31,29 @@ public Sign(){
 	    
 	    l2=new JLabel("Password");  
 	    l2.setBounds(50,125, 100,30); 
-	     
+	    
 	    t2=new JPasswordField();  
 	    t2.setBounds(50,150, 200,30);
 	    
 	    JButton b=new JButton("Sign in");  
-	    b.setBounds(50,200,95,30); 
+	    b.setBounds(50,200,95,30);
 	    b.addActionListener(this);
+	    
+	    
+	    
+	    
+	    
+	    
+	   	    
 	    
 	    f.add(l1); f.add(l2);
 	    f.add(t1); f.add(t2); 
 	    f.add(b);
-	    f.setSize(400,400);  
+	    f.setSize(700,700);  
 	    f.setLayout(null);  
 	    f.setVisible(true);  
     }  
+
 	public void actionPerformed(java.awt.event.ActionEvent e)
 	{	
 		PreparedStatement ps;
@@ -57,6 +69,7 @@ public Sign(){
 			ps.setString(1, UserId);
 			ps.setString(2, Pass);
 			rs = ps.executeQuery();
+			
 		
 		
 	
@@ -64,8 +77,43 @@ public Sign(){
 			if(rs.next())
 			{
 					
-				JOptionPane.showMessageDialog(null, "Success !!");
-				new Option();
+				JOptionPane.showMessageDialog(null, "User Logged in successfully");
+			    l3=new JLabel("Welcome, "+rs.getString("Name"));  
+			    l3.setBounds(50,0,300,30);
+			    l4=new JLabel("Wallet balance : "+ wallet);  
+			    l4.setBounds(50,25, 300,30); 
+			    f.add(l3);f.add(l4);
+				
+				if(wallet<1000)
+				{
+					
+					JOptionPane.showMessageDialog(null, "Please add money to your wallet");
+					 JButton b1=new JButton("Add Money to your wallet");  
+					 
+					    b1.setBounds(250,200,300,30); 
+					    f.add(b1);
+					    b1.addActionListener(new ActionListener() {
+							
+							public void actionPerformed(ActionEvent ae) {
+								
+								
+								new Wallet();
+							    
+								
+
+								
+							}
+						});
+					    
+
+				}
+				else
+				{
+				
+					new Option();
+				
+				}
+				
 				
 				
 			}
@@ -81,4 +129,4 @@ public Sign(){
 	}
 
 
-}  
+} 
